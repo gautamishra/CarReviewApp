@@ -1,0 +1,52 @@
+html{
+	height: 100%;
+}
+
+body{
+	font-family: 'Oxygen', sans-serif;
+	
+}
+
+ul.navbar-nav {
+    float: right;
+    margin: 0;
+}
+.active{
+	color: #fff;
+    background-color: #080808;
+}
+
+#reviewComment{
+	height: 200px;
+}
+
+.searchImage{
+	width:320px;
+	height:200px;
+}
+.readImage{
+	float: right;
+	 width: 320px; 
+	 height: 200px;
+}
+div.commentDiv{	
+	border: 1px solid #425cf4;
+	width :60%;
+}
+button.logout{
+	float:right;
+}
+.glyphicon-star{
+	color: #FFDF00;
+}
+footer{
+	 position: relative;
+	 right: 0;
+	 bottom: 0; 
+	 left: 0; 
+	 padding: 1rem; 
+	/*background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0)); */
+	 background:black;
+	 text-align: center; 
+	       color: white;
+}

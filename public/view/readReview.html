@@ -1,0 +1,146 @@
+<div class = "container">
+<div class = row>
+	<div class = "col-xs-12">
+		 
+		<div class="media-body">
+		 <img class= "readImage" 
+		       ng-src = "data:image/JPEG;base64,{{review.addPhoto| bytetobase}}" />
+		        <h2 class="media-heading">{{review.manufacturer.manufacturerName}}  {{review.modelName.modelName}}  </h2>
+		        <p>By- {{review.user.name}} ,Email -  {{review.user.email}}</p>
+		         <h4>{{review.title}}</h4>
+		       
+		        <h4> Rating : {{review.rating}} <span class="glyphicon glyphicon-star"></span></h4>
+		         <p><b>What is Good </b>- {{review.whatGood}}</p> 
+		         <p><b>What To Improve </b>- {{review.whatImprove}}</p> 
+		         <p><b>Mileage </b>- {{review.mileage}} Kmpl</p>
+		         <p><b> Maintanence Cost </b>	- <i class="fa fa-rupee"></i> {{ review.maintanenceCost}}</p>                       
+		         <p> {{review.anyComment}} Kmpl</p>
+		         <button  id = "i{{review.reviewId}}" class = "btn btn-link" 
+		         ng-click = "checkUserLogin(-1, 'comment')">comment</button>
+		         <button class = "btn btn-link" ng-click = "postLike(review.reviewId)">{{like}}</button>
+		</div>
+	</div>
+</div>
+
+							<!--for Comment Log In-->
+
+
+   
+         <div  class = "commentDiv"  ng-show = checklogin> 
+         	<div class = "row">
+         	<div class = "col-xs-4 col-xs-offset-1" >
+         		 <label for="username">Name</label>
+   				 <input type="text" name="username" id="username" class="form-control" ng-model="name" required />
+
+         	</div>
+         	<div class = "col-xs-4">
+     			<label for="userphone">Phone</label>
+					<input type="number" name="phone" id="userphone" class="form-control" ng-model="phone" required />
+
+         	</div>
+         	
+         </div>
+         <div class = "row">
+	         <div class = "col-xs-5 col-xs-offset-1">
+         			<label for="email">Email</label>
+   					<input type="text" name="email" id="email" class="form-control" ng-model="email" required />
+   					<br><br>
+	          </div>
+	           <div class = "col-xs-3 col-xs-offset-1">
+	           		<br>
+         			<button class = "btn btn-primary" ng-click = "postUserdata()">Submit</button>
+   					
+   					<br><br>
+	          </div>
+	          </div>
+         </div>
+
+     
+
+		        			 <!-- for comment Text Area  -->
+
+	<div class = "row"  ng-show= showCommentArea >
+
+	         <div class = "col-xs-6 col-xs-offset-1">
+         			<label for="comment">{{commentName}}</label>  
+         			
+   					<textarea  name="reviewcomment" id="comment" class="form-control" 
+   							ng-model="reviewComment" ng-keyup="chechCommentLength($event)" 
+   							maxlength = "200" required></textarea>
+   							character remaining :{{count}}
+   							<br>
+   					<button class = "btn btn-default" ng-click = "postComment()">Comment</button>
+   					<br>
+	          </div>
+
+         </div>
+
+
+
+
+		         <h3>Comments</h3>
+
+		         	<!-- <div ng-repeat="comment in comments">
+           					 <div class="col-xs-9 col-xs-offset-1" >
+								<h4><b>{{comment.user.name}}</b></h4>
+				                <p>{{comment.comment}} </p>
+				                <button id ="i{{comment.commentId}}" ng-click="checkUserLoginForReply(comment.commentId)" class="btn btn-link" >reply</button>
+				                <br>
+								</div>
+           			</div> -->
+
+				<!-- <div ng-repeat="comment in comments">
+           				<div class="col-xs-9 col-xs-offset-1" >
+							<h4><b>{{comment.userName}}</b></h4>
+			                <p>{{comment.comment}} </p>
+			                <button id ="i{{comment.commentId}}" ng-click="checkUserLoginForReply(comment.commentId)" class="btn btn-link" >reply</button>
+				                <div ng-repeat="comment in comment.subComments">
+				                		<div class="col-xs-9 col-xs-offset-1" >
+											<h4><b>{{comment.userName}}</b></h4>
+							                <p>{{comment.comment}} </p>
+							                <button id ="i{{comment.commentId}}" ng-click="checkUserLoginForReply(comment.commentId)" class="btn btn-link" >reply</button>
+						                </div>
+							                <div ng-repeat="comment in comment.subComments">
+								                	<div class="col-xs-9 col-xs-offset-1" >
+															<h4><b>{{comment.userName}}</b></h4>
+											                <p>{{comment.comment}} </p>
+											                <button id ="i{{comment.commentId}}" ng-click="checkUserLoginForReply(comment.commentId)" class="btn btn-link" >reply</button>
+										                </div>
+					                		</div>
+				                </div>
+
+				                
+				                <br>
+						</div -->
+
+
+						<ul>
+							    <li ng-repeat="comment in comments | orderBy :'-commentId' ">
+							        <h4><b>{{comment.userName}}</b></h4>
+					                <p>{{comment.comment}} </p>
+					                <button id ="i{{comment.commentId}}" ng-click="checkUserLogin(comment.commentId ,'reply')" class="btn btn-link" >reply</button>
+					               <!--  <login-popup options="commentObj"  on-click="postUserdataForReply.bind(this)(obj)" ng-if = "comment.show"></login-popup> -->
+					                 <div ng-if="comment.subComments.length" ng-include="'reply.html'"></div>
+					             </li>
+						</ul>
+
+
+				<script type="text/ng-template" id="reply.html">
+ 						<ul>
+							    <li ng-repeat="comment in comment.subComments">
+							        <h4><b>{{comment.userName}}</b></h4>
+					                <p>{{comment.comment}} </p>
+
+					                <button id ="i{{comment.commentId}}" ng-click="checkUserLogin(comment.commentId ,'reply')" class="btn btn-link" >reply</button>
+					               <!--  <login-popup options="commentObj"  on-click="postUserdataForReply.bind(this)(obj)" ng-if = "comment.show"></login-popup> -->
+					                 <div ng-if="comment.subComments.length" ng-include="'reply.html'"></div>
+					            </li>
+						</ul>
+   
+				</script>
+
+           		</div>
+
+
+</div>
+		

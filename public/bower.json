@@ -1,0 +1,23 @@
+{
+  "name": "carreviewfrontend",
+  "authors": [
+    "gautamishra <mishragautam1994@gmail.com>"
+  ],
+  "description": "frontend for carreview app",
+  "main": "index.html",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.5",
+    "bootstrap": "^3.3.7",
+    "angular-ui-router": "^1.0.5",
+    "angular-local-storage": "^0.7.1"
+  }
+}

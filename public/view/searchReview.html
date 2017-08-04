@@ -1,0 +1,60 @@
+<div class = "container">
+<div class = "row">
+	<div class="form-group"  >
+	<div class = "col-sm-5">
+			    <label for="manufacturer">Select Manufacturer</label>
+			  	<select  class = "form-control" ng-model="activeManufacturer"
+	       				 ng-change="bringModel(activeManufacturer)" 
+	        			 ng-options="manufacturer as manufacturer.manufacturerName for manufacturer in  manufacturers"></select>
+			</div>
+			<div class = "col-sm-5">
+				<label for="modelName">Select Model Name</label>
+			  	<select class="form-control" id = "modelName"
+						ng-model="activeModelName"
+						ng-options="model as model.modelName for model in  manufacturerModelNames">
+				<!--  <option ng-repeat="manufacturer in manufacturers" value ="{{manufacturer.manufacturerName}}">{{manufacturer.manufacturerName}}</option> -->
+				</select>
+				</div>
+
+				<div class = "col-sm-2">
+				<br>
+				<button  ng-click = "search()" class = "btn btn-primary">Search Reviews</button>
+				</div>
+		</div>
+	</div>
+				<div class="row">
+						<div class = "col-xs-12">
+						<p class = "help-block">{{error.message}}</p>
+						<a ui-sref = "createReview" ng-show="error">createReview</a>	
+						</div>
+				</div>	
+	
+	<div class = "row">
+
+<ul>
+                    <li class="media" ng-repeat="review in reviews | orderBy : '-reviewId'">
+                    
+                        <div class = "row">
+                            <div class="col-xs-12 col-sm-3 col-md-4">
+                               <!--  <a href="#/gauti_dish_detail/{{dish._id}}"> -->
+                               <img class= "searchImage" class="media-object img-thumbnail"  class = "img-responsive"
+                               ng-src = "data:image/JPEG;base64,{{review.addPhoto| bytetobase}}" />
+                                
+                            </div>
+                            <div class="col-xs-12 col-sm-10 col-md-8">
+                                <h2 class="media-heading">{{review.manufacturer.manufacturerName}}  {{review.modelName.modelName}}
+                                 <span class="label label-info"> Rating : {{review.rating}}</span></h2>
+                                 <h4>{{review.title}}</h4>
+                                 <p>By-{{review.user.name}}</p>
+                                 <p>What is Good - {{review.whatGood}}</p> 
+                                 <p>Mileage - {{review.mileage}}Kmpl</p>
+                                 <p> Maintanence Cost   - <i class="fa fa-rupee"></i>{{ review.maintanenceCost}}</p>
+                                <a  ui-sref = "readReview({id : review.reviewId })" >Read More</a>                          
+                            </div>
+                        
+                        </div>
+
+                    </li>
+            </ul>
+	</div>
+</div>

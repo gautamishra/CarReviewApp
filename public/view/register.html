@@ -1,0 +1,36 @@
+<div class="col-md-6 col-md-offset-3">
+    <p ng-show = error>{{error.message}}</p> 
+    <h2>Register</h2>
+    <form name="form" ng-submit="register()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': form.fullName.$dirty && form.fullName.$error.required }">
+            <label for="fullName">Full Name</label>
+            <input type="text"  id="fullName" class="form-control" ng-model="userName" 
+                     name = "fullName" ng-pattern = "fullnamePattern" required />
+            <span ng-show="form.fullName.$error.pattern " class="help-block">There Shoulb be Only Character</span>
+            <span ng-show = " form.fullName.$invalid && !form.fullName.$pristine">Required</span>
+        </div>
+        
+        <div class="form-group" ng-class="{ 'has-error': form.email.$invalid && !form.email.$pristine }">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" class="form-control" ng-model="userEmail" required />
+            <span ng-show="form.email.$invalid && !form.email.$pristine" class="help-block">Email is not Valid</span>
+        </div>
+        <div class="form-group" >
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="userPassword" ng-minlength="3"         ng-maxlength="15" required/>
+            <span ng-show="form.password.$error.required && !form.password.$pristine" class="help-block">
+                     Password is required</span>
+            <span ng-show="form.password.$error.minlength" class="help-block">Password is short</span> 
+            <span ng-show="form.password.$error.maxlength" class="help-block">Password is long</span> 
+        </div>
+        <div class="form-group" >
+            <label for="phone">Phone Number</label>
+            <input type="number" name="phone" id="phone" class="form-control" ng-model="userPhone" ng-pattern = "/^\d{10}$/"  required/>
+            <span ng-show="form.phone.$error.pattern " class="help-block">phone Number Should be of 10 digit only</span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid " class="btn btn-primary">Register</button>
+            <a ui-sref="login" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</div>
