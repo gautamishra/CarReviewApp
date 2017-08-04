@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="carreview">
+		<class>com.mindfire.carreview.model.Commentss</class>
+		<class>com.mindfire.carreview.model.Image</class>
+		<class>com.mindfire.carreview.model.Like</class>
+		<class>com.mindfire.carreview.model.Manufacturer</class>
+		<class>com.mindfire.carreview.model.ModelName</class>
+		<class>com.mindfire.carreview.model.Review</class>
+		<class>com.mindfire.carreview.model.User</class>
+	</persistence-unit>
+</persistence>
