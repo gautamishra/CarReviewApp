@@ -14,114 +14,145 @@
 			</div>
 		</div>
 	</div>
+
+
+
 	<div class = "row row-content">
 
 		<form name = "reviewForm" ng-submit = "sendReview()">
 		  <div class="form-group">
 
-		  <div class = "row">
-		  	<div class = "col-xs-6">
+		  	<div class = "row">
+		  		<div class = "col-xs-6">
 
-		    <label for="manufacturer">Select Manufacturer</label>
-		  	<select  class = "form-control" ng-model="activeManufacturer"
-       				 ng-change="bringModel(activeManufacturer)" 
-        			 ng-options="manufacturer as manufacturer.manufacturerName for manufacturer in  manufacturers"></select>
-			</div>
+				    <label for="manufacturer">Select Manufacturer</label>
+				  	<select  class = "form-control" ng-model="activeManufacturer"
+		       				 ng-change="bringModel(activeManufacturer)" 
+		        			 ng-options="manufacturer as manufacturer.manufacturerName for manufacturer in  manufacturers">
+		        			 	
+		        	</select>
+				</div>
 
-			<div class = "col-xs-6">
-			<label for="modelName">Select Model Name</label>
-		  	<select class="form-control" id = "modelName"
-					ng-model="activeModelName"
-					ng-options="model as model.modelName for model in  manufacturerModelNames">
+				<div class = "col-xs-6">
+					<label for="modelName">Select Model Name</label>
+				  	<select class="form-control" id = "modelName"
+							ng-model="activeModelName"
+							ng-options="model as model.modelName for model in  manufacturerModelNames">
 			<!--  <option ng-repeat="manufacturer in manufacturers" value ="{{manufacturer.manufacturerName}}">{{manufacturer.manufacturerName}}</option> -->
-			</select>
-			</div>
+					</select>
+				</div>
+
 			</div>
 			<br>
+
 			<div class = "row">
-		  	<div class = "col-xs-6">
+		  		<div class = "col-xs-6">
 
-		  	<!-- Title -->
+		  			<!-- Title -->
 
-		  	<div  ng-class="{ 'has-error' : reviewForm.title.$invalid && !reviewForm.title.$pristine }">
-		    <label for="title">*Title</label>
-		    <input type="text" class="form-control" id="title" placeholder="Enter Title of Review"   name = "title"
-		    	     ng-model = "reviewTitle" required/>
-		    <p ng-show="reviewForm.title.$invalid && !reviewForm.title.$pristine " class="help-block">Title is required.</p>
-		    </div>
-		    </div>
-		    <div class = "col-xs-6"> 
-		    <!-- Rating -->
+				  	<div  ng-class="{ 'has-error' : reviewForm.title.$invalid && !reviewForm.title.$pristine }">
+					    <label for="title">*Title</label>
+					    <input type="text" class="form-control" id="title" placeholder="Enter Title of Review"  
+					     name = "title" ng-model = "reviewTitle" required/>
+					    <p ng-show="reviewForm.title.$invalid && !reviewForm.title.$pristine " class="help-block">Title is required.</p>
+				    </div>
+		   		</div>
 
-		    <div class="form-group" ng-class="{ 'has-error' : reviewForm.rating.$invalid && !reviewForm.rating.$pristine }">
-		    <label for="rating">*Rating Out Of 5</label>
-		    <input type="number" class="form-control"  ng-pattern = "onlybetween05"  id="rating" name = "rating"
-		    		placeholder="Enter Rating out of 5" ng-model = "reviewRating" ng-maxlength="1" required/>
-		    <p ng-show="reviewForm.rating.$error.pattern || reviewForm.rating.$error.maxlength" class="help-block">Rating Must Be Between 0 and 5</p>
-		    <p ng-show="reviewForm.rating.$invalid && !reviewForm.rating.$pristine">Rating is Required</p>
+		   		  <!-- Rating -->
 
-		    </div>
+		  		<div class = "col-xs-6"> 
+
+				    <div class="form-group" ng-class="{ 'has-error' : reviewForm.rating.$invalid && !reviewForm.rating.$pristine }">
+					    <label for="rating">*Rating </label><br>
+					    <!-- <input type="number" class="form-control"  ng-pattern = "onlybetween05"  id="rating" name = "rating"
+					    		placeholder="Enter Rating out of 5" ng-model = "reviewRating" ng-maxlength="1" required/>
+					    <p ng-show="reviewForm.rating.$error.pattern || reviewForm.rating.$error.maxlength" class="help-block">Rating Must Be Between 0 and 5</p>
+					    <p ng-show="reviewForm.rating.$invalid && !reviewForm.rating.$pristine">Rating is Required</p> -->
+					    <!-- <br>
+					    <span  class = "increaseSize"  uib-rating  ng-model="rate" max="max"  on-hover="hoveringOver(value)" 		on-leave="overStar = null" 	 aria-labelledby="default-rating"></span>
+
+					    <span class="label" ng-class="{'label-warning': percent<30, 'label-info': percent>=30 && percent<70, 'label-success': percent>=70}" ng-show="overStar">{{percent}}%</span> -->
+
+					    <ng-rate-it 
+							ng-model = "reviewRating"
+							min = "min"
+							max = "max"
+							step = "0.5"
+							read-only = false
+							star-width = 25
+							star-height = 25
+							resetable="false"
+							style = "display: inline;">
+						</ng-rate-it>&nbsp;&nbsp;
+						<span class = "reviewRatingSize label label-danger">{{reviewRating}}</span>	
+				    </div>
+		   		</div>
 		    </div>
 		    <br>
+
+		     
 		    <div class = "row">
-		    <!-- What Is Good -->
-		  	<div class = "col-xs-6">
+		   		
+		   		<!-- What Is Good -->
+			  	<div class = "col-xs-6">
 
-		    <label for="whatGood">What Is Good</label>
-		    <input type="text" class="form-control" id="whatGood" placeholder="Enter What you like in that car in brief" 
-		    		ng-model = "reviewWhatGood" ng-minlength = "4" name = "whatGood"/>
-		    <p ng-show=" reviewForm.whatGood.$error.minlength" class="help-block">Must be Greater then 4 character</p>
-		    </div>
-		    <!-- What To Improve -->
-		    <div class = "col-xs-6">
-		    <label for="whatToImprove">What to Improve</label>
-		    <input type="text" class="form-control" id="whatToImprove" placeholder="Enter What you want to be improve in car" 
-		    		ng-model = "reviewWhatToImprove" name = "whatToImprove" ng-minlength = "4"/>
-		    <p ng-show=" reviewForm.whatToImprove.$error.minlength" class="help-block">Must be Greater then 4 character</p>
-		    </div>
-		    </div>
+				    <label for="whatGood">What Is Good</label>
+				    <input type="text" class="form-control" id="whatGood" placeholder="Enter What you like in that car in brief" 
+				    		ng-model = "reviewWhatGood" ng-minlength = "4" name = "whatGood"/>
+				    <p ng-show=" reviewForm.whatGood.$error.minlength" class="help-block">Must be Greater then 4 character</p>
+			    </div>
+
+		    	<!-- What To Improve -->
+			    <div class = "col-xs-6">
+				    <label for="whatToImprove">What to Improve</label>
+				    <input type="text" class="form-control" id="whatToImprove" placeholder="Enter What you want to be improve in car" 
+				    		ng-model = "reviewWhatToImprove" name = "whatToImprove" ng-minlength = "4"/>
+				    <p ng-show=" reviewForm.whatToImprove.$error.minlength" class="help-block">Must be Greater then 4 character</p>
+			    </div>
+			</div>
 		    <br>
 
 		    <div class = "row">
-		  	<div class = "col-xs-6">
-			<!-- What Is Mileage -->
-		  	<label for="mileage">Mileage</label>
-		    <input type="number"  class="form-control" id="mileage" placeholder="Enter Mileage on Highway"
-		    		ng-model = "reviewMileage" name = "mileage" required/>
-		    <p ng-show="reviewForm.mileage.$invalid && !reviewForm.mileage.$pristine">Mileage is Required</p>
-		    </div>
-		    <div class = "col-xs-6">
-			<label for="maintanenceCost">Maintanence Cost</label>
-		    <input type="number" class="form-control" id="maintanenceCost" placeholder="Enter Maintanence Cost in ruppees"
-		    		ng-model = "reviewMaintanenceCost"/>
-		    </div>
-		    </div>
+			  	<div class = "col-xs-6">
+				<!-- What Is Mileage -->
+
+				  	<label for="mileage">Mileage</label>
+				    <input type="number"  class="form-control" id="mileage" placeholder="Enter Mileage on Highway"
+				    		ng-model = "reviewMileage" name = "mileage" required/>
+				    <p ng-show="reviewForm.mileage.$invalid && !reviewForm.mileage.$pristine">Mileage is Required</p>
+			    </div>
+			    <div class = "col-xs-6">
+					<label for="maintanenceCost">Maintanence Cost</label>
+				    <input type="number" class="form-control" id="maintanenceCost" placeholder="Enter Maintanence Cost in ruppees" ng-model = "reviewMaintanenceCost"/>
+			    </div>
+			</div>
 		    <br>
+
 		    <div class="row">
-		    <div class = "col-xs-12">
-		    <label for="anyComment">Any Comment</label>
-		    <textarea  class="form-control" id = "reviewComment" id="anyComment" placeholder="Enter Your Experience Like Interior ,Exterior ,Space And Comfort" ng-model = "reviewAnyComment"></textarea>
-
-		  	</div>
+			    <div class = "col-xs-12">
+				    <label for="anyComment">Any Comment</label>
+				    <textarea  class="form-control" id = "reviewComment" id="anyComment" placeholder="Enter Your Experience Like Interior ,Exterior ,Space And Comfort" ng-model = "reviewAnyComment"></textarea>
+				    <button  ng-click="check(reviewAnyComment)">Submit</button>
+			  	</div>
 		  	 
 		  	</div>
 		  	<br>
-		  	 <div class = "row">
-		  	  <div class="col-xs-6">
-		    <label for="addPhoto">Add Photo Of Your Car</label>
-		   
-		   
-       			<!-- <input type="file" onchange="angular.element(this).scope().processImage(this)"  /> -->
-       			<input type="file" name="file" onchange="angular.element(this).scope().processImage(this)" id="photo-upload"/>
-    		</div>
-    		<div class="col-xs-6">
 
-       			<img  ng-src='{{filePreview}}' alt = "car image"  class= "searchImage"/>
-    		</div> 	
+		  	<div class = "row">
+			  <div class="col-xs-12 col-sm-6">
+				    <label for="addPhoto">Add Photo Of Your Car</label>
+		       			<!-- <input type="file" onchange="angular.element(this).scope().processImage(this)"  /> -->
+		       			<input type="file" name="file" onchange="angular.element(this).scope().processImage(this)" id="photo-upload"/>
+	    		</div>
+	    		<div class="col-xs-12 col-sm-6">
 
-		 </div> 
-		 <br>
-		  <button type="submit" class="btn btn-primary" ng-disabled = "reviewForm.$invalid">Submit</button>
+	       			<img  ng-src='{{filePreview}}' alt = "car image" class = "searchImage" />
+	    		</div> 	
+
+		 	</div> 
+			 <br>
+		 	 <button type="submit" class="btn btn-primary" ng-disabled = "reviewForm.$invalid">Submit</button>
+		 	 </div>
 		</form>
 
 	</div>

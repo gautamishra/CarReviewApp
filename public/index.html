@@ -9,8 +9,14 @@
 	<script src = "bower_components/jquery/dist/jquery.min.js"></script>
 	<script src = "bower_components/angular/angular.min.js"></script>
   <script src = "bower_components/angular-local-storage/dist/angular-local-storage.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+  <script src = "//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
+  <script src = "bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src = "bower_components/angular-rateit/dist/ng-rateit.min.js"></script>
+  <!-- <script src = "http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.9.0.js"></script> -->
+  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
 	<script src = "bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="bower_components/angular-rateit/dist/ng-rateit.css" />
 	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="style/main.css">
 </head>
@@ -28,8 +34,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/"><img src="images/logo.png" height=30 width=41></a>
+                 <a class="navbar-brand" ui-sref="home">CA<i class="fa fa-rupee"></i>EVIEW</a>
             </div>
+
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav" >
                     <li ><a ui-sref="home" ui-sref-active = "active">
@@ -39,8 +46,16 @@
                          Write Review</a></li>
                     <li><a ui-sref="searchReview" ui-sref-active = "active">
                      Search Reviews</a></li>
-                      <li><a ui-sref="login" ui-sref-active = "active">
-                        Account</a></li>
+                      <li class="nav-item dropdown"><a ui-sref="#" ui-sref-active = "active" class="nav-link dropdown-toggle"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="navbarDropdownMenuLink">
+                        Account</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          
+                          <a class="dropdown-item" ui-sref="login">Login/Logout</a><br>
+                          <a class="dropdown-item" ui-sref="profile">Profile</a>
+                
+                        </div>
+                        </li>
                 </ul>
             </div>
         </div>
@@ -55,7 +70,7 @@
 
 
    <!-- Footer  -->
-   <footer>
+   <footer class = "navbar-fixed-bottom"> 
       <p>carreview2017@mindfire</p>
 
    </footer>
@@ -77,5 +92,7 @@
   <script src = "scripts/controllers/registerUserController.js"></script>
   <script src = "scripts/controllers/readReviewController.js"></script>
   <script src = "scripts/controllers/logInUserController.js"></script>
+  <script src = "scripts/controllers/profileController.js"></script>
+
 </body>
 </html>

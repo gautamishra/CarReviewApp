@@ -37,6 +37,17 @@ myApp.factory('readReviewService', ['$http', function($http){
 						})
 	}
 
+//  For Getting Like On any Review
+
+	readReviewServiceApi.getLikeOnReviewId = function(id){
+			return $http.get("http://localhost:8085/carreview/like/review/" + id)
+						.then(function(response){
+							return response.data;
+						},function(response){
+							console.log(response.data);
+						})
+	}
+
 	return readReviewServiceApi;
 }]);
 	

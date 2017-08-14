@@ -1,0 +1,62 @@
+<div class = "container"> 
+   <div class = "modal-body">
+      <form name="form" ng-submit="postCommentLogin(user)" role="form">
+         <div ng-if = showLogIn>  
+            
+               <div class = "row ">
+               	<div class = "col-xs-12 col-sm-4 col-md-3" >
+               		 <!-- Full Name -->
+                     <div class="form-group" ng-class="{ 'has-error': form.fullName.$dirty && form.fullName.$error.required }">
+                         <label for="fullName">Full Name</label>
+                         <input type="text"  id="fullName" class="form-control" ng-model="user.name" 
+                                  name = "fullName" ng-pattern = "fullnamePattern" required />
+                         <span ng-show="form.fullName.$error.pattern " class="help-block">There Shoulb be Only Character</span>
+                         <span ng-show = " form.fullName.$invalid && !form.fullName.$pristine">Required</span>
+                     </div>
+
+               	</div>
+               	<div class = "col-xs-12 col-sm-4 col-md-3">
+            			<div class="form-group" >
+                         <label for="phone">Phone Number</label>
+                         <input type="number" name="phone" id="phone" class="form-control" ng-model="user.phone"
+                               ng-pattern = "/^\d{10}$/"  required/>
+                         <span ng-show="form.phone.$error.pattern " class="help-block">phone Number Should be of 10 digit only</span>
+                     </div>
+               	</div>
+               	
+               </div>
+               <div class = "row">
+                  <div class = "col-xs-12 col-sm-6 col-md-6">
+               			 <div class="form-group" ng-class="{ 'has-error': form.email.$invalid && !form.email.$pristine }">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" ng-model="user.email" required />
+                            <span ng-show="form.email.$invalid && !form.email.$pristine" class="help-block">
+                                 Email is not Valid</span>
+                        </div>
+                   </div>
+               </div>
+           
+         </div>
+            <div class = "row">
+
+                  <div class = "col-xs-12 col-sm-6">
+                        <label for ="comment">Comment:</label> 
+                        <br>
+                        <label for="comment" ng-if = !showLogIn>{{commentName}}</label> 
+                        
+                        <textarea  name="reviewcomment" id="comment" class="form-control" 
+                              ng-model="user.comment" ng-keyup="chechCommentLength($event)" 
+                              maxlength = "200" required></textarea>
+                              character remaining :{{count}}
+                              <br>
+                              <br>
+                   </div>
+
+               </div>
+
+            <div class="form-actions ">
+                   <button type="submit" ng-disabled="form.$invalid " class="btn btn-primary">Comment</button>
+            </div>
+      </form>
+   </div>
+</div>

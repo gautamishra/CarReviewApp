@@ -17,7 +17,8 @@ myApp.factory('registerUserService', ['$http', function($http){
 //  Register User For Comment
 
 	registerUserServiceApi.postUserForComment = function(data){
-		return $http.post("http://localhost:8085/carreview/user/comment", JSON.stringify(data))
+
+		return $http.post("http://localhost:8085/carreview/user/comment", data)
 			 .then(function(response){
 			 	return response.data; 
 			 },function(response){

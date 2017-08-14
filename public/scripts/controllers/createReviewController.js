@@ -1,7 +1,15 @@
 var mayApp = angular.module('myApp');
 
-myApp.controller('createReviewController',['$scope','createReviewService','$window','$location'
-								,function($scope , createReviewService,$window,$location){
+// filter for reading newline 
+
+myApp.filter('breakFilter', function () {
+    return function (text) {
+        if (text !== undefined) return text.replace(/\n/g, '<br />');
+    };
+})
+
+myApp.controller('createReviewController',['$scope','createReviewService','$window','$location','$uibModal'
+								,function($scope , createReviewService,$window,$location ,$uibModal){
 	console.log("create controller loaded");
 
 $scope.onlybetween05 = /[0-5]/;
@@ -13,7 +21,7 @@ $scope.writeReviewFlag = false ;
 var user;
 // Review Data
 
-$scope.activeManufacturer  		= "";
+$scope.activeManufacturer  		= "";	
 $scope.activeModelName 	   		= "";
 $scope.reviewTitle         		= ""; 
 $scope.reviewRating       		= ""; 
@@ -24,26 +32,16 @@ $scope.reviewMaintanenceCost    = "";
 $scope.reviewAnyComment         = ""; 
 $scope.reviewPhoto       		= ""; 
 			
+$scope.signup = false;
 
-	//  Checking User Is Login Or Not 
+// for rating ========
 
-	if($window.localStorage.getItem("user") != undefined ){
-		$scope.writeReviewFlag = false ;
-	}
-	else{
-		$scope.writeReviewFlag = true ;
-	}
-
-	// getting data for manufacturer
-
- 	createReviewService.getManufacturer()
- 	.then(function(response){
- 			$scope.manufacturers= response;
- 			$scope.activeManufacturer=$scope.manufacturers[0];
- 	})
+$scope.rate = 1;
+$scope.max = 5;
 
 
-// getting data for Model Names
+
+  // getting data for Model Names
 
  	$scope.bringModel = function(manufacturer){
  		var id = manufacturer.manufacturerId;
@@ -56,43 +54,19 @@ $scope.reviewPhoto       		= "";
  					})
  			}
 
-// $scope.uploadFile = function (input) {
-//  	console.log("upload function ");
-//     if (input.files && input.files[0]) {
-//         var reader = new FileReader();
-//         reader.onload = function (e) {
- 
-//             //Sets the Old Image to new New Image
-//             // $('#photo-id').attr('src', e.target.result);
+	// getting data for manufacturer
+	var getManufacturers = function(){
+ 	createReviewService.getManufacturer()
+ 	.then(function(response){
+ 			$scope.manufacturers= response;
+ 			$scope.activeManufacturer=$scope.manufacturers[0];
+ 			$scope.bringModel($scope.manufacturers[0]);
+ 		});
+	}
 
-//  			$scope.filePreview = e.target.result;
- 			
-//             //Create a canvas and draw image on Client Side to get the byte[] equivalent
-//             // var canvas = document.createElement("canvas");
-//             var imageElement = document.createElement("img");
- 
-//             imageElement.setAttribute('src', e.target.result);
-//             canvas.width = imageElement.width;
-//             canvas.height = imageElement.height;
-//             var context = canvas.getContext("2d");
-//             context.drawImage(imageElement, 0, 0);
-//             var base64Image = canvas.toDataURL("image/jpeg");
- 	
-//             // Removes the Data Type Prefix 
-//             // And set the view model to the new value
-//             $scope.reviewPhoto = base64Image.replace(/data:image\/jpeg;base64,/g, '');
-//             console.log(base64Image);
-//             // $scope.reviewPhoto = base64Image;
-//             $scope.$apply()	;																																																																																											
-//         }
-                
-//         //Renders Image on Page
-//         reader.readAsDataURL(input.files[0]);
-//     }
+	getManufacturers();
 
 
-// };
- 		
  		
  //  Reading image 
 
@@ -116,7 +90,7 @@ $scope.reviewPhoto       		= "";
 		  }
 	}
 
-//  Sending Review To Api
+//   Creating A  Review  =========================================================================
 
 	$scope.sendReview = function(){
 			if($window.localStorage.getItem("user") != undefined){
@@ -144,50 +118,111 @@ $scope.reviewPhoto       		= "";
 	 							})
 	 		}
 	 		else{
-	 			$scope.writeReviewFlag = true ;
+	 			$scope.showForm();
 	 		}
 	 }	
  		
 
- // Convert Image In BLOB
+	 //  Code For Modal Dialog For Sign up Or Login===================================================
 
-//  	function dataURItoBlob(dataURI) {
-//     // convert base64/URLEncoded data component to raw binary data held in a string
-//     var byteString;
-//     if (dataURI.split(',')[0].indexOf('base64') >= 0)
-//         byteString = atob(dataURI.split(',')[1]);
-//     else
-//         byteString = unescape(dataURI.split(',')[1]);
+	  $scope.showForm = function () {
+            $scope.message = "Model Is Loaded";
+            console.log($scope.message);
 
-//     // separate out the mime component
-//     var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+            var modalInstance = $uibModal.open({
+                templateUrl: 'view/signupOrLogin.html',
+                controller: ModalInstanceCtrl,
+            });
 
-//     // write the bytes of the string to a typed array
-//     var ia = new Uint8Array(byteString.length);
-//     for (var i = 0; i < byteString.length; i++) {
-//         ia[i] = byteString.charCodeAt(i);
-//     }
-
-//     return new Blob([ia], {type:mimeString});
-// }
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                // console.log("canceled" + new Date())
+            });
+        };
 
 
-// var BASE64_STRING = 'data:image/jpeg;base64,/9j/4QN6RXhpZgAASUkqAAgAAAAIA';
+        $scope.change = function(){
+        	$scope.signup = !$scope.signup;
+        }
 
-//     function convertURIToBinary(dataURI) {
-//       var base64Index = dataURI.indexOf(BASE64_STRING ) + BASE64_STRING.length;
-//       var base64 = dataURI.substring(base64Index);
-//       var raw = window.atob(base64);
-//       var rawLength = raw.length;
-//       var array = new Uint8Array(new ArrayBuffer(rawLength));
+//  Checking User Is Login Or Not 
 
-//       for(i = 0; i < rawLength; i++) {
-//         array[i] = raw.charCodeAt(i);
-//       }
-//       return array;
-//     }
+	if($window.localStorage.getItem("user") != undefined ){
+		$scope.writeReviewFlag = false ;
+	}
+	else{
+		// $scope.writeReviewFlag = true ;
+
+		$scope.showForm();
+	}
 
 
-}])
+
+	 
+
+}]);
+
+
+
+
+
+
+
+//  Controller For Modal===============================================================================
+
+var ModalInstanceCtrl	 = function ($scope, $uibModalInstance , loginUserService,$window,registerUserService) {
+    $scope.form = {}
+    $scope.signup = false;
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+    $scope.change = function(){
+        $scope.signup = ! $scope.signup;
+    }
+
+
+// Method for user Sign Up through Modal ===============================================================
+
+   $scope.submitForm = function(user){
+		var data = {};
+		data.name 		= user.fullname;
+		data.email 		= user.email;
+		data.password 	= user.password;
+		data.phone		= user.phone;
+		var data = JSON.stringify(data);
+		registerUserService.postUser(data)
+							.then(function(response){
+								$scope.signup = ! $scope.signup;
+							},function(response){
+								$scope.error = response.data;
+								console.log(response.data);
+							})
+	}
+
+
+//  Method for user Log in Through Modal ==================================================================
+
+    $scope.login = function(user1){
+    	console.log(user1);
+    	var data = {};
+		data.userName = user1.email;
+		data.password = user1.password;
+		loginUserService.loginAuthentication(data)
+						.then(function(response){
+							
+							$window.localStorage.setItem('user',JSON.stringify(response));							
+							 $uibModalInstance.dismiss('cancel');
+							
+						},
+						function(response){
+							console.log(response.data);
+							$scope.error = response.data;
+							
+						});					
+    }
+};
 
   

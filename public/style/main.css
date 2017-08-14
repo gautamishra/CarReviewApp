@@ -4,6 +4,7 @@ html{
 
 body{
 	font-family: 'Oxygen', sans-serif;
+	 padding-bottom:40px;
 	
 }
 
@@ -21,13 +22,22 @@ ul.navbar-nav {
 }
 
 .searchImage{
-	width:320px;
-	height:200px;
+	width:70%;
+	height:40%;
 }
 .readImage{
 	float: right;
-	 width: 320px; 
+	 width: 300px; 
 	 height: 200px;
+}
+/*@media only screen and (max-width: 400px) {
+     For mobile phones: 
+    .readImage{
+       float:left;
+    }
+}*/
+.right{
+	float: right;
 }
 div.commentDiv{	
 	border: 1px solid #425cf4;
@@ -40,13 +50,39 @@ button.logout{
 	color: #FFDF00;
 }
 footer{
-	 position: relative;
-	 right: 0;
-	 bottom: 0; 
-	 left: 0; 
-	 padding: 1rem; 
-	/*background: linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,0)); */
-	 background:black;
-	 text-align: center; 
-	       color: white;
+	background-color: black;
+	/*background: linear-gradient(to left, rgba(0,0,0,0), rgba(0,0,0,1)); */
+	text-align:  center;
+	color:white;
+	opacity: .5;
+}
+
+ng-rate-it{
+	display: inline;
+}	
+.ngrateit-star{
+        background-size: 25px;
+    }
+.titleColor{
+	color:#41b2f4;
+}
+.reviewInfo{
+	font-size: 12px;
+}
+.reviewRatingSize{
+	font-size: 18px;
+	/*padding-left:2em*/
+}
+.registerStyle{
+	box-shadow: 1px 1px 10px 10px #edf1f7;
+	padding: 5%;
+}
+.navbar-brand{
+	font-size: 25px;
+}
+.navbar-inverse .navbar-brand {
+    color: #fcf8e3;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color:  #fcf8e3	;
 }

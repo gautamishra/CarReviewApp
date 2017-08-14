@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp',['ui.router','LocalStorageModule']);
+var myApp = angular.module('myApp',['ui.router','LocalStorageModule','ui.bootstrap','ngSanitize', 'ngRateIt']);
 
 myApp.config(['$stateProvider' ,'$urlRouterProvider',function($stateProvider, $urlRouterProvider) {
 
@@ -58,5 +58,13 @@ myApp.config(['$stateProvider' ,'$urlRouterProvider',function($stateProvider, $u
             templateUrl: 'view/readReview.html',
             controller : 'readReviewController'
         })
+
+        // Route For User Profile
+
+        .state('profile' , {
+            url : '/profile',
+            templateUrl: 'view/profile.html',
+            controller : 'profileController'
+        });
 
 }]);

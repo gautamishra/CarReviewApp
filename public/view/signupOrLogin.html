@@ -1,0 +1,93 @@
+<div class= "contsiner">
+<div class = "row">
+<div class  = "col-xs-12">
+    <div class="modal-header" ng-show= signup>
+        <button style = "float: right" class="btn btn-danger" ng-click="cancel()"><i class="fa fa-times" aria-hidden="true"></i>
+        </button> 
+        <h3>Create A New Account!</h3>
+
+    <form name="form" role = "form" ng-submit="submitForm(user)" novalidate>
+        <div class="modal-body">
+
+            <!-- Full NAME -->
+            <div class="form-group">
+                <label>FullName</label>
+                <input type="text" name="name" class="form-control" ng-model="user.fullname" required>
+                <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">You name is required.</p>
+            </div>
+     
+            <!-- Email  -->
+            <div class="form-group" ng-class="{ 'has-error': form.email.$invalid && !form.email.$pristine }">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" class="form-control" ng-model="user.email" required />
+                <span ng-show="form.email.$invalid && !form.email.$pristine" class="help-block">Email is not Valid</span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group" >
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" ng-model="user.password" ng-minlength="3"         ng-maxlength="15" required/>
+                <span ng-show="form.password.$error.required && !form.password.$pristine" class="help-block">
+                         Password is required</span>
+                <span ng-show="form.password.$error.minlength" class="help-block">Password is short</span> 
+                <span ng-show="form.password.$error.maxlength" class="help-block">Password is long</span> 
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group" >
+                <label for="phone">Phone Number</label>
+                <input type="number" name="phone" id="phone" class="form-control" ng-model="user.phone"
+                 ng-pattern = "/^\d{10}$/"  required/>
+                <span ng-show="form.phone.$error.pattern" class="help-block">phone Number Should be of 10 digit only</span>
+            </div>
+
+
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">SignUp</button>
+            <button  class="btn btn-warning" ng-click="change()">LogIn</button>
+           
+        </div>
+    </form>
+    </div>
+    </div>
+    </div>
+
+
+
+                                                         <!-- Log In Code -->
+
+<div class = "row">
+    <div class = "col-xs-12">
+    <div class="modal-header" ng-hide=signup>
+         <button style = "float: right" class="btn btn-danger" ng-click="cancel()"><i class="fa fa-times" aria-hidden="true"></i></button> <h3> Log In</h3>
+     <form name="form1"  role="form" ng-submit="login(user1)" class="modal-body">
+
+         <p class="help-block">{{error.message}}</p>
+
+            <!-- Email -->
+            <div class="form-group" ng-class="{ 'has-error': form1.email.$dirty && form1.email.$error.required }">
+                <label for="emailmail">Email</label>
+                <input type="email" name="email" id="email" class="form-control" ng-model="user1.email" required />
+                <span ng-show=" form1.email.$error.$required" class="help-block">Username is required</span>
+                <span ng-show = "form1.email.$invalid && !form1.email.$pristine" class = "help-block">Email is not Correct</span>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group" ng-class="{ 'has-error': form1.password.$dirty && form1.password.$error.required }">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" ng-model="user1.password" required />
+                <span ng-show="form1.password.$dirty && form1.password.$error.required" class="help-block">Password is required</span>
+            </div>
+
+            <!-- Login Button -->
+            <div class="form-actions modal-footer"">
+                <button type="submit" ng-disabled="form1.$invalid "  class="btn btn-primary" >Login</button>
+                 <button  class="btn btn-warning" ng-click="change()">Signup</button>
+            </div>
+        </form>
+
+     </div>
+</div>
+</div>
+</div>
