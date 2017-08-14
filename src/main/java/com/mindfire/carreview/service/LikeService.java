@@ -29,8 +29,8 @@ public class LikeService {
 		return likeJpaRepository.findAll();
 	}
 
-	public List<Like> findLikeByReviewId(Integer id) {
-		return likeJpaRepository.findByReviewReviewId(id);
+	public Integer findLikeByReviewId(Integer id) {
+		return likeJpaRepository.countByReviewReviewId(id);
 	}
 
 	public Like postLike(LikeDTO likeDTO) {

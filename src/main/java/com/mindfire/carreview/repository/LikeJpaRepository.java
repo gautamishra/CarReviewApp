@@ -15,4 +15,5 @@ import com.mindfire.carreview.model.Like;
 public interface LikeJpaRepository extends JpaRepository<Like, Integer> {
 	
 	List<Like> findByReviewReviewId(Integer id);
+	Integer countByReviewReviewId(Integer id);
 }
