@@ -13,6 +13,15 @@ myApp.factory('loginUserService', ['$http', function($http){
 						});
 	}
 
+	loginUserServiceApi.setPassword = function(data){
+		return $http.post("http://localhost:8085/carreview/user/setPassword" , data)
+					.then(function(response){
+						return response.data;
+					},function(response){
+						return response.data;
+					});
+	}
+
 
 return loginUserServiceApi;
 }]);

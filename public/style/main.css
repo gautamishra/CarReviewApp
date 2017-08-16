@@ -7,6 +7,9 @@ body{
 	 padding-bottom:40px;
 	
 }
+.boxStyle{
+	box-shadow: 1px 0px 5px 5px #edf1f7;
+}
 
 ul.navbar-nav {
     float: right;
@@ -74,7 +77,7 @@ ng-rate-it{
 	/*padding-left:2em*/
 }
 .registerStyle{
-	box-shadow: 1px 1px 10px 10px #edf1f7;
+	box-shadow: 1px 5px 10px 10px #edf1f7;
 	padding: 5%;
 }
 .navbar-brand{
@@ -85,4 +88,10 @@ ng-rate-it{
 }
 .navbar-inverse .navbar-nav>li>a {
     color:  #fcf8e3	;
+}
+.styleComment{
+	background-color: #f4f9f9;
+}
+.help-block{
+	color:red;
 }

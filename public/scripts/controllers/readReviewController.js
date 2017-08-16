@@ -12,7 +12,7 @@ myApp.filter('bytetobase', function () {
 })
 .filter('lineBreak' , function(){
 	return function(data){
-		return data.replace(/\n/g , '<br>')
+		return (!!data)?data.replace(/\n/g , '<br>'):'';
 	}
 })
 .controller('readReviewController',['$scope' , '$stateParams','readReviewService','searchReviewService','$window'
@@ -45,15 +45,7 @@ myApp.filter('bytetobase', function () {
 	$scope.commentOrReply = '';
 	$scope.parentId = '';
 	
-	 // var commentDiv = $('#commentDivId').html();
-	 // // commentDiv = commentDiv[0].innerHTML;
-	 // console.log(commentDiv);
-	// Getting Inf Of Review
-
-	// $.get("http://localhost:8085/carreviewfrontend/public/view/commentSignUpDiv.html",function(data){
-	// 	 commentDiv = data;
-	// 	console.log(commentDiv);
-	// })
+	
 
 	searchReviewService.getReviewById(reviewId)
 						.then(function(data){

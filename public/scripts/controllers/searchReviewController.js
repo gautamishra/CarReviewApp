@@ -18,11 +18,13 @@ myApp.filter('bytetobase', function () {
 		$scope.manufacturerModelNames=[{ modelId:null,modelName:'Select', manufacturer:[]}];
 		$scope.reviews = [];
 
-// for Loading Manufacturer Details From DB
+// for Loading Manufacturer Details From DB==================
+
 		createReviewService.getManufacturer()
  							.then(function(response){
 						 			$scope.manufacturers= response;
 						 			$scope.activeManufacturer=$scope.manufacturers[0];
+						 			$scope.bringModel($scope.manufacturers[0]);
 			 	})
 
 

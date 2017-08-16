@@ -5,12 +5,17 @@ myApp.controller('logInUserController',['$scope','loginUserService','$location',
 
 	console.log("login controller loaded");
  	
-	var user = {};
-	$scope.userName = "";
-	$scope.password = "";
-	$scope.user = "";
+	
+	
+	$scope.user  = {};
 	$scope.error = "";
 	$scope.isLogIn = false;
+	$scope.notPartialRegister = true;
+	$scope.userName = "";
+
+	if($scope.userName != ""){
+		$scope.notPartialRegister = false;
+	}
 
 //  checking user is already logged in or not
 
@@ -22,10 +27,10 @@ myApp.controller('logInUserController',['$scope','loginUserService','$location',
 	}
 
 
-	$scope.login = function(){
+	$scope.login = function(user){
 		var data = {};
-		data.userName = $scope.userName;
-		data.password = $scope.password;
+		data.userName = user.userName;
+		data.password = user.password;
 		loginUserService.loginAuthentication(data)
 						.then(function(response){
 							$scope.user = response;
@@ -34,6 +39,10 @@ myApp.controller('logInUserController',['$scope','loginUserService','$location',
 						},
 						function(response){
 							console.log(response.data);
+							if(response.data.message == "You need to set Your Password first"){
+								$scope.notPartialRegister = false;
+								$scope.userName = user.userName;
+							}
 							$scope.error = response.data;
 						});					
 	}
@@ -52,6 +61,19 @@ myApp.controller('logInUserController',['$scope','loginUserService','$location',
 		}
 	}
 
-	
+	// set Password =================
+
+	$scope.setPassword = function(user){
+		if(user.password == user.confirmPassword){
+			var data = {};
+			data.userName = $scope.userName;
+			data.password = user.password;
+			console.log(data);
+		}
+		else{
+			$scope.error.message = "password does not match";
+		}
+
+	}
 
 }])

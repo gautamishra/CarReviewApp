@@ -1,5 +1,6 @@
-<div class = "container">
-
+<div class = "container boxStyle">
+<br>
+<br>
 <div class = row>
 	<div class = "col-xs-12">
 		 
@@ -20,7 +21,7 @@
 		         <p><b> Maintanence Cost </b>	- <i class="fa fa-rupee"></i> {{ review.maintanenceCost}}</p>                       
 		         <!-- <p> {{review.anyComment | lineBreak}} Kmpl</p> -->
 		         <p ng-bind-html = "review.anyComment | lineBreak"></p>
-		         <p class = "right">&nbsp;&nbsp;{{likeCount}}</p>
+		         <p class = "right badge">&nbsp;&nbsp;{{likeCount}}</p>
 
 		         <button class = "btn btn-info right" ng-click = "postLike(review.reviewId)">{{like}}</button>
 		         <p class = "right">&nbsp;&nbsp;</p>
@@ -125,7 +126,7 @@
 
 
 						<ul>
-							    <li ng-repeat="comment in comments | orderBy :'-commentId' ">
+							    <li ng-repeat="comment in comments | orderBy :'-commentId'" class = "styleComment">
 							        <h4><b>{{comment.userName}}</b></h4>
 					                <p>{{comment.comment}} </p>
 					                <button id ="i{{comment.commentId}}" ng-click="showCommentModal(comment.commentId)" class="btn btn-link" >reply</button>
