@@ -95,6 +95,7 @@ public class UserService {
         String generatedPassword = null;
         try {
             // Create MessageDigest instance for MD5
+        	
             MessageDigest md = MessageDigest.getInstance("MD5");
             //Add password bytes to digest
             md.update(passwordToHash.getBytes());
