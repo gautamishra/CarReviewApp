@@ -31,10 +31,10 @@ public class LikeController {
 	/**
 	 * Getting Like On Particular Review
 	 * @param id
-	 * @return
+	 * @return	
 	 */
 	@GetMapping("/like/review/{id}")
-	public List<Like> getReviewLike(@PathVariable(value = "id") Integer id){
+	public Integer getReviewLike(@PathVariable(value = "id") Integer id){
 		return  likeService.findLikeByReviewId(id);
 	}
 	
