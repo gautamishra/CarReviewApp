@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
  * @author mindfire
  *
  */
-public class SimpleMD5Example 
+public class SimpleMD5Example
 {
     public static void main(String[] args) 
     {

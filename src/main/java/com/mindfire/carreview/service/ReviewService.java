@@ -3,10 +3,15 @@ package com.mindfire.carreview.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.mindfire.carreview.dto.ReviewDTO;
+import com.mindfire.carreview.dto.ReviewUpdateDTO;
 import com.mindfire.carreview.exception.GenerateExceptionApi;
 import com.mindfire.carreview.model.Manufacturer;
 import com.mindfire.carreview.model.ModelName;
@@ -112,6 +117,54 @@ public class ReviewService {
 	public Review findByReviewId(Integer id) {
 
 		return reviewJpaRepository.findOne(id);
+	}
+
+	/**
+	 * getting Page of review
+	 * @param page
+	 * @return
+	 */
+	public Page<Review> findAllPageReviews(int pageNumber) {
+		PageRequest page = new PageRequest(pageNumber,4,Sort.Direction.DESC,"reviewId");
+		return reviewJpaRepository.findAll(page);
+	}
+
+	
+	/**
+	 * Update Review 
+	 * @param reviewUpdateDTO
+	 * @return
+	 */
+	public Review updateReview(ReviewUpdateDTO reviewDTO) {
+		Manufacturer manufacturer = manufacturerJpaRepository.findByManufacturerId(reviewDTO.getManufacturerId());
+
+		// get Model Object
+		ModelName model = modelNameJpaRepository.findOne(reviewDTO.getModelId());
+
+		Review review = new Review();
+		review.setReviewId(reviewDTO.getReviewId());
+		review.setManufacturer(manufacturer);
+		review.setModelName(model);
+		review.setUser(userJpaRepository.findOne(reviewDTO.getUserId()));
+		review.setTitle(reviewDTO.getTitle());
+		review.setRating(reviewDTO.getRating());
+		review.setWhatGood(reviewDTO.getWhatGood());
+		review.setWhatImprove(reviewDTO.getWhatImprove());
+		review.setMileage(reviewDTO.getMileage());
+		review.setMaintanenceCost(reviewDTO.getMaintanenceCost());
+		review.setAnyComment(reviewDTO.getAnyComment());
+		review.setAddPhoto(reviewDTO.getAddPhoto());
+
+		return reviewJpaRepository.saveAndFlush(review);
+	}
+
+	public void deleteReview(Integer id) throws GenerateExceptionApi {
+		try{
+			reviewJpaRepository.delete(id);	
+		}
+		catch(EmptyResultDataAccessException e){
+			throw new GenerateExceptionApi("not vlaid reviewId" , HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }

@@ -15,6 +15,7 @@ public class Manufacturer implements Serializable {
 
 	@Id
 	@Column(name="manufacturer_id")
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer manufacturerId;
 
 	@Column(name="manufacturer_name")
